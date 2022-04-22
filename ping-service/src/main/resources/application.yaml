@@ -1,0 +1,8 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /ping-pong-game
+
+app:
+  msPause: 1000
+  pongServiceUrl: http://pong-service:9005/pong-ping-game/pong-service/pong

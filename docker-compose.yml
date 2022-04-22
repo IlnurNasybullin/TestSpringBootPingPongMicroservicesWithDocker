@@ -1,0 +1,14 @@
+version: '3'
+services:
+  ping-service:
+    container_name: ping-service
+    build: ./ping-service
+    image: ping_pong_service:ping_service
+    ports:
+      - "9000:9000"
+  pong-service:
+    container_name: pong-service
+    build: ./pong-service
+    image: ping_pong_service:pong_service
+    ports:
+      - "9005:9005"
