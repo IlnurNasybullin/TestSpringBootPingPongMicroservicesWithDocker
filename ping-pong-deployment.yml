@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: ping-service
+  name: ping-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: ping-service
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: ping-service
+    spec:
+      containers:
+        - image: ilnurnasybullin/ping-service:0.0.1
+          name: ping-service
+          ports:
+            - containerPort: 9000
+          resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: ping-service
+  name: ping-service
+spec:
+  ports:
+    - name: "9000"
+      port: 9000
+      targetPort: 9000
+  selector:
+    io.kompose.service: ping-service
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: pong-service
+  name: pong-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: pong-service
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: pong-service
+    spec:
+      containers:
+        - image: ilnurnasybullin/pong-service:0.0.1
+          name: pong-service
+          ports:
+            - containerPort: 9005
+          resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: pong-service
+  name: pong-service
+spec:
+  ports:
+    - name: "9005"
+      port: 9005
+      targetPort: 9005
+  selector:
+    io.kompose.service: pong-service
+status:
+  loadBalancer: {}
